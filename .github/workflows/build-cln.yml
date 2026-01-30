@@ -101,7 +101,7 @@ jobs:
     
     - name: Create tarball
       run: |
-        tar -czf cln-macos-${{ matrix.cln_version }}.tar.gz -C $HOME/cln-install .
+        tar -czf $HOME/cln-macos-${{ matrix.cln_version }}.tar.gz -C $HOME/cln-install .
         
     - name: Create Release
       env:
