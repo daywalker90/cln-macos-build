@@ -67,6 +67,8 @@ jobs:
       uses: snok/install-poetry@v1
       with:
         version: 2.0.1
+        virtualenvs-create: true
+        virtualenvs-in-project: true
     
     - name: Checkout CLN ${{ matrix.cln_version }}
       uses: actions/checkout@v6
@@ -82,6 +84,7 @@ jobs:
         export RUST_PROFILE=release
         
         # Initialize Python environment
+        poetry env use python3.10
         poetry install
         
         # Configure
