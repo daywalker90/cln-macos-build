@@ -48,7 +48,7 @@ jobs:
     
     - name: Install dependencies
       run: |
-        brew uninstall --force python@3.14
+        brew uninstall --ignore-dependencies python@3.14
         brew install autoconf automake libtool gnu-sed gettext \
           libsodium protobuf lowdown pkgconf openssl make sqlite
 
