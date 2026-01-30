@@ -8,7 +8,7 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
-        cln_version: ['v25.02.2', 'v25.05.1', 'v25.09.3', 'v25.12.1']
+        cln_version: ['v25.09.3', 'v25.12.1']
     
     steps:    
     - name: Verify Homebrew location
