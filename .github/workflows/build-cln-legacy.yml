@@ -48,6 +48,7 @@ jobs:
     
     - name: Install dependencies
       run: |
+        brew uninstall --force python@3.14
         brew install autoconf automake libtool gnu-sed gettext \
           libsodium protobuf lowdown pkgconf openssl make sqlite
 
@@ -78,8 +79,6 @@ jobs:
         ref: ${{ matrix.cln_version }}
     
     - name: Build CLN
-      env:
-        PYO3_USE_ABI3_FORWARD_COMPATIBILITY: "1"
       run: |
         export PATH="/opt/homebrew/opt/:$PATH"
         export CPATH=/opt/homebrew/include
