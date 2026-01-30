@@ -79,8 +79,7 @@ jobs:
     
     - name: Build CLN
       env:
-        PYTHON_SYS_EXECUTABLE: ${{ steps.python.outputs.python-path }}
-        PYO3_PYTHON: ${{ steps.python.outputs.python-path }}
+        PYO3_USE_ABI3_FORWARD_COMPATIBILITY: "1"
       run: |
         export PATH="/opt/homebrew/opt/:$PATH"
         export CPATH=/opt/homebrew/include
