@@ -4,11 +4,26 @@ on:
   workflow_dispatch:
 
 jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Prepare version matrix
+        id: set-matrix
+        run: |
+          # Convert comma-separated input to JSON array
+          VERSIONS="${{ github.event.inputs.cln_versions }}"
+          # Remove spaces and convert to JSON array
+          JSON_ARRAY=$(echo $VERSIONS | tr ',' '\n' | jq -R . | jq -s -c .)
+          echo "matrix={\"cln_version\":$JSON_ARRAY}" >> $GITHUB_OUTPUT
+
   build:
+    needs: prepare
     runs-on: macos-latest
     strategy:
-      matrix:
-        cln_version: ['v25.09.3', 'v25.12.1']
+      matrix: ${{ fromJson(needs.prepare.outputs.matrix) }}
+      fail-fast: false
     
     steps:    
     - name: Verify Homebrew location
@@ -40,11 +55,11 @@ jobs:
       with:
         python-version: 3.13
     
-    - name: Clone CLN
-      run: |
-        git clone https://github.com/ElementsProject/lightning.git
-        cd lightning
-        git checkout ${{ matrix.cln_version }}
+    - name: Checkout CLN ${{ matrix.cln_version }}
+      uses: actions/checkout@v6
+      with:
+        repository: ElementsProject/lightning
+        ref: ${{ matrix.cln_version }}
     
     - name: Build CLN
       run: |
