@@ -3,6 +3,9 @@ name: Build CLN for macOS
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+  
 jobs:
   prepare:
     runs-on: ubuntu-latest
