@@ -71,7 +71,6 @@ jobs:
     
     - name: Build CLN
       run: |
-        cd lightning
         export PATH="/opt/homebrew/opt/:$PATH"
         export CPATH=/opt/homebrew/include
         export LIBRARY_PATH=/opt/homebrew/lib
@@ -102,7 +101,6 @@ jobs:
     
     - name: Create tarball
       run: |
-        cd $HOME
         tar -czf cln-macos-${{ matrix.cln_version }}.tar.gz -C cln-install .
         
     - name: Create Release
@@ -110,7 +108,6 @@ jobs:
         GH_TOKEN: ${{ github.token }}
       run: |
         VERSION=${{ matrix.cln_version }}
-        cd lightning
         
         # Create release if it doesn't exist
         gh release create $VERSION --repo ${{ github.repository }} \
